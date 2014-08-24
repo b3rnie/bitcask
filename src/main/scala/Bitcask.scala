@@ -371,10 +371,10 @@ class BitcaskLog(dir: File, max_size: Long) extends Logging {
 
   def delete(id: Long) = {
     archive = archive.filter(_ != id)
-    //pool.get(id).foreach(p => {
-    //  p.stop
-    //  pool.remove(id)
-    //})
+    pool.get(id).foreach(p => {
+      p.stop()
+      pool.remove(id)
+    })
     new File(dir, filename(id)).delete()
   }
 
